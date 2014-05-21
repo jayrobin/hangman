@@ -1,10 +1,9 @@
 class Dictionary
-
 	def initialize
 		@words = []
 	end
 
-	def load_dictionary(dictionary_file, min_word_len=0, max_word_len=99)
+	def load(dictionary_file, min_word_len=0, max_word_len=99)
 	  file = File.open(dictionary_file, 'r')
 	  contents = file.read
 
