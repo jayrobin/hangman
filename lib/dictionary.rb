@@ -12,4 +12,8 @@ class Dictionary
 	  
 	  file.close
 	end
+
+	def get_random_word
+		@words.sample
+	end
 end
