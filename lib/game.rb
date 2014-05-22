@@ -9,6 +9,7 @@ class Game
 		until @dictionary.is_word_valid?(@word)
 			@word = player.get_word
 		end
+		puts @word
 	end
 
 	def set_guesser(player)
