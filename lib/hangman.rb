@@ -1,4 +1,5 @@
 require_relative 'dictionary'
+require_relative 'game'
 
 class Hangman
 	def initialize
@@ -7,6 +8,8 @@ class Hangman
 
 	def new_game
 	  print_intro
+
+	  @game = init_game
 	end
 
 	private
@@ -18,8 +21,11 @@ class Hangman
 
 	def print_intro
 		puts "Welcome to Hangman"
-		puts "James Robinson 2014"
+		puts "By James Robinson (2014)"
+	end
+
+	def init_game
+		game = Game.new
+		game
 	end
 end
-
-Hangman.new
