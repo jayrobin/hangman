@@ -12,6 +12,9 @@ class Hangman
 	  print_intro
 
 	  @game = init_game
+	  run_game
+
+		puts "Game Over"
 	end
 
 	private
@@ -36,6 +39,12 @@ class Hangman
 		game.set_guesser(get_new_player)
 
 		game
+	end
+
+	def run_game
+		until @game.game_over do
+			@game.step
+		end
 	end
 
 	def get_new_player
