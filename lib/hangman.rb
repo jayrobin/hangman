@@ -27,7 +27,7 @@ class Hangman
 	end
 
 	def init_game
-		game = Game.new
+		game = Game.new(@dictionary)
 
 		puts "Should the hangman be a (h)uman or (c)omputer player? "
 		game.set_hangman(get_new_player)

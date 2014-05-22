@@ -1,4 +1,8 @@
 class Game
+	def initialize(dictionary)
+		@dictionary = dictionary
+	end
+	
 	def set_hangman(player)
 		@hangman = player
 	end
