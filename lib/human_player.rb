@@ -6,7 +6,7 @@ class HumanPlayer < Player
 		gets.chomp
 	end
 
-	def get_guess
+	def get_guess(used_letters)
 		letter = ""
 
 		until letter.size == 1

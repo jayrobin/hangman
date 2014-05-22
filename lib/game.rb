@@ -4,6 +4,7 @@ class Game
 	def initialize(dictionary)
 		@dictionary = dictionary
 		@game_over = false
+		@used_letters = []
 	end
 
 	def set_hangman(player)
@@ -19,6 +20,14 @@ class Game
 	end
 
 	def step
-		guess = @guesser.get_guess
+		guess = @guesser.get_guess(@used_letters) until is_valid_guess?(guess)
+
+		@used_letters << guess
+	end
+
+	private
+
+	def is_valid_guess?(guess)
+		!(@used_letters.include?(guess) || guess.nil?)
 	end
 end

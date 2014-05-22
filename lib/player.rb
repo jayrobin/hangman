@@ -6,5 +6,5 @@ class Player
 	end
 
 	def get_word; end
-	def get_guess; end
+	def get_guess(used_letters); end
 end

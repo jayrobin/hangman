@@ -1,6 +1,8 @@
 require_relative 'player'
 
 class AIPlayer < Player
+	NoAvailableLettersError = Class.new(StandardError)
+
 	def initialize(name, dictionary)
 	  super(name)
 
@@ -14,7 +16,11 @@ class AIPlayer < Player
 		@dictionary.get_random_word
 	end
 
-	def get_guess
-		@letters.delete_at(rand(@letters.size))
+	def get_guess(used_letters)
+		available_letters = (('a'..'z').to_a - used_letters)
+
+		raise NoAvailableLettersError if available_letters.size == 0
+
+		available_letters.sample
 	end
 end
