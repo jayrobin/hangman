@@ -5,4 +5,15 @@ class HumanPlayer < Player
 		print "Enter word: "
 		gets.chomp
 	end
+
+	def get_guess
+		letter = ""
+
+		until letter.size == 1
+			print "Enter letter: "
+			letter = gets.chomp
+		end
+
+		letter
+	end
 end
