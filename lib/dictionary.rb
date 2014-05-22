@@ -20,7 +20,7 @@ class Dictionary
 		@words.sample
 	end
 
-	def is_word_valid(word)
+	def is_word_valid?(word)
 		@words.include?(word)
 	end
 end

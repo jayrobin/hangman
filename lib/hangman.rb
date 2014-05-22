@@ -45,7 +45,7 @@ class Hangman
 			player_type = gets.chomp
 
 			player = case player_type
-				when "c" then AIPlayer.new("Computer")
+				when "c" then AIPlayer.new("Computer", @dictionary)
 				when "h" then get_new_human_player
 			  else nil
 			end
