@@ -18,7 +18,7 @@ class Hangman
 
 	def load_dictionary
 	  @dictionary = Dictionary.new
-	  @dictionary.load("dictionary.txt")
+	  @dictionary.load("dictionary.txt", 5, 12)
 	end
 
 	def print_intro
