@@ -4,7 +4,7 @@ class Game
 	def initialize(dictionary)
 		@dictionary = dictionary
 		@game_over = false
-		@used_letters = []
+		@used_letters = {}
 	end
 
 	def set_hangman(player)
@@ -20,21 +20,21 @@ class Game
 	end
 
 	def step
-		guess = @guesser.get_guess(@used_letters) until is_valid_guess?(guess)
+		guess = @guesser.get_guess(@used_letters.keys) until is_valid_guess?(guess)
 
-		@used_letters << guess
-		puts get_word_state.join
+		@used_letters[guess] = true
+		puts "#{guess} #{get_word_state.join}"
 	end
 
 	private
 
 	def is_valid_guess?(guess)
-		!(@used_letters.include?(guess) || guess.nil?)
+		!(@used_letters[guess] || guess.nil?)
 	end
 
 	def get_word_state
   	@word.split(//).map do |letter|
-  		@used_letters.include?(letter) ? letter : "_"
+  		@used_letters[letter] ? letter : "_"
   	end
 	end
 end
