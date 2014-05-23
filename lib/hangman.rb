@@ -1,5 +1,6 @@
 require_relative 'dictionary'
 require_relative 'game'
+require_relative 'player'
 require_relative 'ai_player'
 require_relative 'human_player'
 
@@ -8,13 +9,11 @@ class Hangman
 	  load_dictionary
 	end
 
-	def new_game
-	  print_intro
+	def start
+  	print_intro
 
-	  loop do
-		  @game = init_game
-		  run_game
-		 end
+	  @game = init_game
+	  run_game
 	end
 
 	private
@@ -30,6 +29,31 @@ class Hangman
 	end
 
 	def init_game
+		puts "Enter 'n' for a new game or 'l' to load a game"
+
+		case gets.chomp.downcase
+		when 'l' then load_game
+		when 'n' then new_game
+		else init_game
+		end
+	end
+
+	def load_game
+		game = Game.new(@dictionary)
+
+		puts "Save games:"
+		filenames = get_save_files
+		filenames.each_with_index { |file, index| puts "#{index + 1}: #{file}" }
+
+		print "Enter save number: "
+		file_num = gets.chomp
+
+		game.load_saved_game(filenames[file_num.to_i - 1])
+
+		game
+	end
+
+	def new_game
 		game = Game.new(@dictionary)
 
 		puts "Should the hangman be a (h)uman or (c)omputer player? "
@@ -69,5 +93,9 @@ class Hangman
 	def get_new_human_player
 		print "Enter a name for the player: "
 		HumanPlayer.new(gets.chomp)
+	end
+
+	def get_save_files
+	  Dir.glob("*.yml")
 	end
 end

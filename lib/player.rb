@@ -21,4 +21,16 @@ class Player
 
 		save_data
 	end
+
+	def self.load(save_data)
+		name = save_data['name']
+
+		player = case save_data['type']
+		when 'c' then AIPlayer.new(name)
+		when 'h' then HumanPlayer.new(name)
+		else raise StandardError
+		end
+
+		player
+	end
 end

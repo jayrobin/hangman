@@ -25,14 +25,19 @@ class Game
 	end
 
 	def step
+		@guesser.give_guess_feedback(@used_letters.keys, get_word_state, MAX_TURNS - @turns_taken)
 		guess = @guesser.get_guess(@used_letters.keys) until is_valid_guess?(guess)
 		@turns_taken += 1
 
 		@used_letters[guess] = true
-		@guesser.give_guess_feedback(@used_letters.keys, get_word_state, MAX_TURNS - @turns_taken)
-
+		
 		@game_over = is_game_over?
 		save_game unless @game_over
+	end
+
+	def load_saved_game(filename)
+		file = load_yaml_file(filename)
+		set_state_from_yaml(file)
 	end
 
 	private
@@ -73,5 +78,26 @@ class Game
 
 	def write_to_file(filename, data)
 		File.open(filename, 'w') { |f| f.puts data }
+	end
+
+	def load_yaml_file(filename)
+		@save_filename = filename
+		file = File.open(filename, 'r')
+		yaml = YAML::load(file.read)
+		file.close
+
+		yaml
+	end
+
+	def set_state_from_yaml(yaml)
+		@word = yaml['word']
+
+		@used_letters = {}
+		yaml['used_letters'].each { |letter| @used_letters[letter] = true }
+		@turns_taken = yaml['turns_taken']
+
+		@hangman = Player.load(yaml['hangman'])
+		
+		@guesser = Player.load(yaml['guesser'])
 	end
 end

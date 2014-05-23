@@ -3,7 +3,7 @@ require_relative 'player'
 class AIPlayer < Player
 	NoAvailableLettersError = Class.new(StandardError)
 
-	def initialize(name, dictionary)
+	def initialize(name, dictionary = nil)
 	  super(name)
 
 	  # AI requires access to dictionary as both hangman and guesser
