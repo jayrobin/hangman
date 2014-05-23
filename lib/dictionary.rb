@@ -1,26 +1,25 @@
 class Dictionary
 	def initialize
-		@words = []
+		@words = {}
 	end
 
 	def load(dictionary_file, min_word_len=0, max_word_len=99)
 	  file = File.open(dictionary_file, 'r')
 	  contents = file.read
 
-	  @words = contents.split(/[\r\n]+/)
-
-	  # load words into array and strip short/long words as required
-	  @words = @words.select { |word| word.size.between?(min_word_len, max_word_len) }
-	  @words = @words.map(&:downcase)
+	  words_array = contents.split(/[\r\n]+/)
+	  words_array.each do |word|
+	  	@words[word.downcase] = true if word.size.between?(min_word_len, max_word_len)
+	  end
 
 	  file.close
 	end
 
 	def get_random_word
-		@words.sample
+		@words.keys.sample
 	end
 
 	def is_word_valid?(word)
-		@words.include?(word)
+		@words[word]
 	end
 end
