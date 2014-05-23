@@ -32,6 +32,7 @@ class Game
 		@guesser.give_guess_feedback(@used_letters.keys, get_word_state, MAX_TURNS - @turns_taken)
 
 		@game_over = is_game_over?
+		save_game unless @game_over
 	end
 
 	private
@@ -60,5 +61,17 @@ class Game
 		save_data['guesser'] = @guesser.get_save_data
 
 		save_data
+	end
+
+	def save_game
+		date = Time.now.strftime("%Y-%m-%d")
+		time = Time.now.strftime("%H%M%S")
+	  @save_filename ||= "#{@hangman.name} vs #{@guesser.name} - #{date}_#{time}.yml"
+
+	  write_to_file(@save_filename, get_save_data.to_yaml)
+	end
+
+	def write_to_file(filename, data)
+		File.open(filename, 'w') { |f| f.puts data }
 	end
 end
