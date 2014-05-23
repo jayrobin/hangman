@@ -16,4 +16,11 @@ class HumanPlayer < Player
 
 		letter
 	end
+
+	def get_save_data
+	  save_data = super
+	  save_data['type'] = "h"
+
+	  save_data
+	end
 end

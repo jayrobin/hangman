@@ -23,4 +23,11 @@ class AIPlayer < Player
 
 		available_letters.sample
 	end
+
+	def get_save_data
+	  save_data = super
+	  save_data['type'] = "c"
+
+	  save_data
+	end
 end

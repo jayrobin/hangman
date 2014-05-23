@@ -14,4 +14,11 @@ class Player
 		puts "#{turns_remaining} turns remaining"
 		puts "\n"
 	end
+
+	def get_save_data
+		save_data = {}
+		save_data['name'] = @name
+
+		save_data
+	end
 end

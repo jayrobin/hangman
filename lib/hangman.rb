@@ -11,8 +11,10 @@ class Hangman
 	def new_game
 	  print_intro
 
-	  @game = init_game
-	  run_game
+	  loop do
+		  @game = init_game
+		  run_game
+		 end
 	end
 
 	private

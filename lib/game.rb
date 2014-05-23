@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Game
 	MAX_TURNS = 10
 
@@ -47,5 +49,16 @@ class Game
 		@winner = @hangman if @winner.nil? && @turns_taken == MAX_TURNS
 		
 		!@winner.nil?
+	end
+
+	def get_save_data
+		save_data = {}
+		save_data['word'] = @word
+		save_data['used_letters'] = @used_letters.keys
+		save_data['turns_taken'] = @turns_taken
+		save_data['hangman'] = @hangman.get_save_data
+		save_data['guesser'] = @guesser.get_save_data
+
+		save_data
 	end
 end
