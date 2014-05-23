@@ -13,8 +13,6 @@ class Hangman
 
 	  @game = init_game
 	  run_game
-
-		puts "Game Over"
 	end
 
 	private
@@ -45,6 +43,9 @@ class Hangman
 		until @game.game_over do
 			@game.step
 		end
+
+		puts "Game over!"
+		puts "#{@game.winner.name} wins!"
 	end
 
 	def get_new_player
