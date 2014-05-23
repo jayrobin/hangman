@@ -27,7 +27,7 @@ class Game
 		@turns_taken += 1
 
 		@used_letters[guess] = true
-		puts "#{guess} #{get_word_state}"
+		@guesser.give_guess_feedback(@used_letters.keys, get_word_state, MAX_TURNS - @turns_taken)
 
 		@game_over = is_game_over?
 	end
