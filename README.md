@@ -31,3 +31,5 @@ The AI has access to the the entire dictionary, which is constantly updated ever
  * if the last guessed letter was correct, the word contains one or more instances of the last guessed letter
  * if the last guessed letter was incorrect, the word contains no instances of the last guessed letter
 4. On all subsequent guesses, it will count the number of instances of each letter in the dictionary and choose the one with the highest frequency (always 'e'). This step is made more performant by joining the dictionary as a single, giant string and removing all instances of already used letters.
+
+Note that the last step is not an optimal solution: for the best guess, we should be counting the number of words with one or more occurrences of each letter rather than the total number of occurrences throughout the dictionary. However, the former method is considerably slower than the latter without greatly impacting the overall frequencies, so this trade-off is accepted in order to allow for much faster calculations.
