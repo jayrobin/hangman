@@ -28,7 +28,6 @@ class Game
 	end
 
 	def step
-		time = Time.now
 		@guesser.give_guess_feedback(@used_letters.keys, get_word_state, MAX_TURNS - @turns_taken)
 		guess = @guesser.get_guess(@used_letters.keys) until is_valid_guess?(guess)
 
@@ -40,8 +39,6 @@ class Game
 		
 		@game_over = is_game_over?
 		save_game unless @game_over
-
-		puts Time.now - time
 	end
 
 	def load_saved_game(filename)
