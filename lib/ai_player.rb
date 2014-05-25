@@ -33,6 +33,19 @@ class AIPlayer < Player
 		available_letters.max_by { |letter, count| count }.first
 	end
 
+	def give_guess_feedback(used_letters, word_state, turns_remaining)
+		super(used_letters, word_state, turns_remaining)
+		return if used_letters.size == 0
+
+		last_guess = used_letters.last
+		last_guess_correct = word_state.include?(last_guess)
+
+		# select by XNOR: both TRUE or both FALSE
+		# if last guess was correct, remove words that did not contain last guessed letter
+		# if last guess was incorrect, remove words that did contain last letter
+		@dictionary = @dictionary.select { |word| word.include?(last_guess) == last_guess_correct }
+	end
+
 	def get_save_data
 	  save_data = super
 	  save_data['type'] = "c"
