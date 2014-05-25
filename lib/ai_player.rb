@@ -8,8 +8,6 @@ class AIPlayer < Player
 
 	  # AI requires access to dictionary as both hangman and guesser
 	  @dictionary = dictionary
-
-	  @letters = ('a'..'z').to_a
 	end
 
 	def set_word_length(word_length)
@@ -21,17 +19,9 @@ class AIPlayer < Player
 	end
 
 	def get_guess(used_letters)
-		available_letters = (('a'..'z').to_a - used_letters)
+		remaining_letters = get_letter_frequencies(used_letters)
 
-		used_letters = used_letters.join
-		available_letters = available_letters.reduce({}) do |hash, letter|
-			hash[letter] = @dictionary.count { |word| word.gsub(/#{used_letters}/, '').include?(letter) }
-			hash
-		end
-
-		raise NoAvailableLettersError if available_letters.size == 0
-
-		available_letters.max_by { |letter, count| count }.first
+		remaining_letters.max_by { |letter, count| count }.first
 	end
 
 	def give_guess_feedback(used_letters, word_state, turns_remaining)
@@ -44,6 +34,15 @@ class AIPlayer < Player
 		@dictionary = strip_from_dictionary(used_letters.last, last_guess_correct, word_regexp)
 	end
 
+	def get_save_data
+	  save_data = super
+	  save_data['type'] = "c"
+
+	  save_data
+	end
+
+	private
+
 	def strip_from_dictionary(last_guess, last_guess_correct, word_regexp)
 		# select by XNOR: both TRUE or both FALSE
 		# if last guess was correct, remove words that did not contain last guessed letter
@@ -52,10 +51,21 @@ class AIPlayer < Player
 		@dictionary.select { |word| word.include?(last_guess) == last_guess_correct && word =~ word_regexp }
 	end
 
-	def get_save_data
-	  save_data = super
-	  save_data['type'] = "c"
+	def get_letter_frequencies(used_letters)
+		remaining_letters = (('a'..'z').to_a - used_letters)
+		used_letters = used_letters.join
 
-	  save_data
+		# combine entire dictionary into a string and strip all used letters
+		all_letters = @dictionary.join.gsub(/#{used_letters}/, '')
+
+		# count instances of unused letters within dictionary-string
+		remaining_letters = remaining_letters.reduce({}) do |hash, letter|
+			hash[letter] = all_letters.count(letter)
+			hash
+		end
+
+		raise NoAvailableLettersError if remaining_letters.size == 0
+
+		remaining_letters
 	end
 end
