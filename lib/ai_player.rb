@@ -23,8 +23,9 @@ class AIPlayer < Player
 	def get_guess(used_letters)
 		available_letters = (('a'..'z').to_a - used_letters)
 
+		used_letters = used_letters.join
 		available_letters = available_letters.reduce({}) do |hash, letter|
-			hash[letter] = @dictionary.count { |word| word.include?(letter) }
+			hash[letter] = @dictionary.count { |word| word.gsub(/#{used_letters}/, '').include?(letter) }
 			hash
 		end
 

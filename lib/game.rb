@@ -3,7 +3,7 @@ require 'yaml'
 class Game
 	MAX_TURNS = 10
 
-	attr_reader :game_over, :winner
+	attr_reader :game_over, :winner, :word
 
 	def initialize(dictionary)
 		@dictionary = dictionary
@@ -30,6 +30,9 @@ class Game
 	def step
 		@guesser.give_guess_feedback(@used_letters.keys, get_word_state, MAX_TURNS - @turns_taken)
 		guess = @guesser.get_guess(@used_letters.keys) until is_valid_guess?(guess)
+
+		puts "#{@guesser.name} guessed '#{guess}'"
+
 		@turns_taken += 1
 
 		@used_letters[guess] = true

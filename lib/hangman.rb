@@ -71,6 +71,7 @@ class Hangman
 		end
 
 		puts "Game over!"
+		puts "Word was #{@game.word}"
 		puts "#{@game.winner.name} wins!"
 	end
 
