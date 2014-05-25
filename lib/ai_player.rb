@@ -38,7 +38,7 @@ class AIPlayer < Player
 		super(used_letters, word_state, turns_remaining)
 		return if used_letters.size == 0
 
-		last_guess_correct = word_state.include?(last_guess)
+		last_guess_correct = word_state.include?(used_letters.last)
 		word_regexp = /#{word_state.gsub('_', '\w')}/
 
 		@dictionary = strip_from_dictionary(used_letters.last, last_guess_correct, word_regexp)
