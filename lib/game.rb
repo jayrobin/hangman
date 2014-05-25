@@ -28,14 +28,15 @@ class Game
 	end
 
 	def step
-		@guesser.give_guess_feedback(@used_letters.keys, get_word_state, MAX_TURNS - @turns_taken)
+		old_word_state = get_word_state
+
+		@guesser.give_guess_feedback(@used_letters.keys, old_word_state, MAX_TURNS - @turns_taken)
 		guess = @guesser.get_guess(@used_letters.keys) until is_valid_guess?(guess)
 
 		puts "#{@guesser.name} guessed '#{guess}'"
 
-		@turns_taken += 1
-
 		@used_letters[guess] = true
+		@turns_taken += 1 if old_word_state == get_word_state
 		
 		@game_over = is_game_over?
 		save_game unless @game_over
