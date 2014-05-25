@@ -19,6 +19,9 @@ class AIPlayer < Player
 	end
 
 	def get_guess(used_letters)
+		# always return 'e' on first guess
+		return 'e' if used_letters.size == 0
+
 		remaining_letters = get_letter_frequencies(used_letters)
 
 		remaining_letters.max_by { |letter, count| count }.first
