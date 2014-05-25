@@ -38,17 +38,18 @@ class AIPlayer < Player
 		super(used_letters, word_state, turns_remaining)
 		return if used_letters.size == 0
 
-		last_guess = used_letters.last
 		last_guess_correct = word_state.include?(last_guess)
+		word_regexp = /#{word_state.gsub('_', '\w')}/
 
+		@dictionary = strip_from_dictionary(used_letters.last, last_guess_correct, word_regexp)
+	end
+
+	def strip_from_dictionary(last_guess, last_guess_correct, word_regexp)
 		# select by XNOR: both TRUE or both FALSE
 		# if last guess was correct, remove words that did not contain last guessed letter
 		# if last guess was incorrect, remove words that did contain last letter
-		@dictionary = @dictionary.select { |word| word.include?(last_guess) == last_guess_correct }
-
-		# match only words matching word_state regex
-		word_regex = /#{word_state.gsub('_', '\w')}/
-		@dictionary = @dictionary.select { |word| word =~ word_regex }
+		# AND word must match a given regular expression
+		@dictionary.select { |word| word.include?(last_guess) == last_guess_correct && word =~ word_regexp }
 	end
 
 	def get_save_data
