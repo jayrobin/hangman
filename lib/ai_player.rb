@@ -23,9 +23,14 @@ class AIPlayer < Player
 	def get_guess(used_letters)
 		available_letters = (('a'..'z').to_a - used_letters)
 
+		available_letters = available_letters.reduce({}) do |hash, letter|
+			hash[letter] = @dictionary.count { |word| word.include?(letter) }
+			hash
+		end
+
 		raise NoAvailableLettersError if available_letters.size == 0
 
-		available_letters.sample
+		available_letters.max_by { |letter, count| count }.first
 	end
 
 	def get_save_data
