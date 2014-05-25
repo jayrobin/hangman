@@ -12,6 +12,10 @@ class AIPlayer < Player
 	  @letters = ('a'..'z').to_a
 	end
 
+	def set_word_length(word_length)
+		@dictionary = @dictionary.select { |word| word.size == word_length }
+	end
+
 	def get_word
 		@dictionary.get_random_word
 	end

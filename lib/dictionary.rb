@@ -1,4 +1,6 @@
 class Dictionary
+	include Enumerable
+
 	def initialize
 		@words = {}
 	end
@@ -21,5 +23,13 @@ class Dictionary
 
 	def is_word_valid?(word)
 		@words[word]
+	end
+
+	def each
+		@words.each { |word, v| yield word }
+	end
+
+	def size
+		@words.size
 	end
 end

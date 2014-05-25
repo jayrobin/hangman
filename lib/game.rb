@@ -18,10 +18,13 @@ class Game
 		until @dictionary.is_word_valid?(@word)
 			@word = player.get_word
 		end
+
+		@guesser.set_word_length(@word.length) unless @guesser.nil?
 	end
 
 	def set_guesser(player)
 		@guesser = player
+		@guesser.set_word_length(@word.length) unless @word.nil?
 	end
 
 	def step
