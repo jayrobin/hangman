@@ -28,8 +28,4 @@ class Dictionary
 	def each
 		@words.each { |word, v| yield word }
 	end
-
-	def size
-		@words.size
-	end
 end

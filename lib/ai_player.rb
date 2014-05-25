@@ -44,6 +44,10 @@ class AIPlayer < Player
 		# if last guess was correct, remove words that did not contain last guessed letter
 		# if last guess was incorrect, remove words that did contain last letter
 		@dictionary = @dictionary.select { |word| word.include?(last_guess) == last_guess_correct }
+
+		# match only words matching word_state regex
+		word_regex = /#{word_state.gsub('_', '\w')}/
+		@dictionary = @dictionary.select { |word| word =~ word_regex }
 	end
 
 	def get_save_data
